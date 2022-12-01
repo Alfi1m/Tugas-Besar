@@ -36,7 +36,7 @@ class DetailActivity : AppCompatActivity() {
             imgDetailPoster.loadImageTvShow("$BASE_URL_API_IMAGE$POSTER_SIZE_W780${data.poster}")
             imgDetailHightlight.loadImageTvShow("$BASE_URL_API_IMAGE$POSTER_SIZE_W185${data.imgPreview}")
             tvTitle.text = data.name
-            tvDesc.text = data.desc
+            tvDesc.text = if (data.desc.isNullOrEmpty()) "No Description" else data.desc
         }
     }
 

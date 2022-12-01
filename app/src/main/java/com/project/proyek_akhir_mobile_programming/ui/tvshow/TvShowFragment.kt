@@ -44,6 +44,7 @@ class TvShowFragment : Fragment() {
             onClick {
                 Intent(activity, DetailActivity::class.java).also { intent ->
                     intent.putExtra(DetailActivity.EXTRA_TYPE, DetailActivity.data[1])
+                    intent.putExtra(DetailActivity.EXTRA_DATA, it)
                     startActivity(intent)
                 }
             }
