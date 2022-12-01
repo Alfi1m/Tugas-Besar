@@ -1,5 +1,6 @@
 package com.project.proyek_akhir_mobile_programming.ui.tvshow
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import com.project.proyek_akhir_mobile_programming.data.client.ApiClient
 import com.project.proyek_akhir_mobile_programming.data.model.ListResponse
 import com.project.proyek_akhir_mobile_programming.data.model.TvShowResponse
 import com.project.proyek_akhir_mobile_programming.databinding.FragmentTvShowBinding
+import com.project.proyek_akhir_mobile_programming.ui.detail.DetailActivity
 import com.project.proyek_akhir_mobile_programming.utils.showToast
 import retrofit2.Call
 import retrofit2.Callback
@@ -38,7 +40,14 @@ class TvShowFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = TvShowAdapter()
+        adapter = TvShowAdapter().apply {
+            onClick {
+                Intent(activity, DetailActivity::class.java).also { intent ->
+                    intent.putExtra(DetailActivity.EXTRA_TYPE, DetailActivity.data[1])
+                    startActivity(intent)
+                }
+            }
+        }
 
         getTvShow()
     }
