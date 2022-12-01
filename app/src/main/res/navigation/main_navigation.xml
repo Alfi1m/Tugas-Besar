@@ -18,7 +18,7 @@
         tools:layout="@layout/fragment_tv_show" />
 
     <fragment
-        android:id="@+id/navigation_favorite"
+        android:id="@+id/navigation_profile"
         android:name="com.project.proyek_akhir_mobile_programming.ui.profile.ProfileFragment"
         android:label="@string/profile"
         tools:layout="@layout/fragment_profile" />
