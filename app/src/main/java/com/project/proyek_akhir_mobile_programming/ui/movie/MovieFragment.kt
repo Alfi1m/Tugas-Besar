@@ -6,15 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.project.proyek_akhir_mobile_programming.data.client.ApiClient
-import com.project.proyek_akhir_mobile_programming.data.model.ListResponse
+import androidx.lifecycle.ViewModelProvider
 import com.project.proyek_akhir_mobile_programming.data.model.MovieResponse
 import com.project.proyek_akhir_mobile_programming.databinding.FragmentMovieBinding
 import com.project.proyek_akhir_mobile_programming.ui.detail.DetailActivity
 import com.project.proyek_akhir_mobile_programming.utils.showToast
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class MovieFragment : Fragment() {
 
@@ -22,6 +18,8 @@ class MovieFragment : Fragment() {
     private lateinit var binding: FragmentMovieBinding
 
     private lateinit var adapter: MovieAdapter
+
+    private lateinit var viewModel: MovieViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +38,7 @@ class MovieFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // init
+        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[MovieViewModel::class.java]
         adapter = MovieAdapter().apply {
             onClick { data ->
                 Intent(activity, DetailActivity::class.java).also { intent ->
@@ -56,31 +55,21 @@ class MovieFragment : Fragment() {
     private fun getMovies() {
 
         showLoading(true)
-
-        ApiClient.instance.getMovies()
-            .enqueue(object : Callback<ListResponse<MovieResponse>>{
-                override fun onResponse(
-                    call: Call<ListResponse<MovieResponse>>,
-                    response: Response<ListResponse<MovieResponse>>
-                ) {
-                    if (response.isSuccessful){
-                        binding.apply {
-                            adapter.movies = response.body()?.results as MutableList<MovieResponse>
-                            rvMovie.adapter = adapter
-                            rvMovie.setHasFixedSize(true)
-                        }
-                        showLoading(false)
-                    }else{
-                        activity?.showToast(response.message().toString())
-                    }
-                }
-
-                override fun onFailure(call: Call<ListResponse<MovieResponse>>, t: Throwable) {
-                    activity?.showToast(t.message.toString())
+        viewModel.setMovies()
+        viewModel.getMovies().observe(viewLifecycleOwner){
+            if (it != null){
+                adapter.movies = it as MutableList<MovieResponse>
+                binding.apply {
+                    rvMovie.setHasFixedSize(true)
+                    rvMovie.adapter = adapter
                     showLoading(false)
                 }
+            }else{
+                showLoading(false)
+                activity?.showToast("Data Failed to load or Data is Empty")
+            }
+        }
 
-            })
     }
 
     private fun showLoading(state: Boolean){
