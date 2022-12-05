@@ -33,10 +33,11 @@ class DetailActivity : AppCompatActivity() {
 
     private fun getDetailTvShow(data: TvShowResponse) {
         binding.apply {
-            imgDetailPoster.loadImageTvShow("$BASE_URL_API_IMAGE$POSTER_SIZE_W780${data.poster}")
-            imgDetailHightlight.loadImageTvShow("$BASE_URL_API_IMAGE$POSTER_SIZE_W185${data.imgPreview}")
+            imgDetailPoster.loadImageTvShow("$BASE_URL_API_IMAGE$POSTER_SIZE_W185${data.imgPreview}")
+            imgDetailHightlight.loadImageTvShow("$BASE_URL_API_IMAGE$POSTER_SIZE_W780${data.poster}")
             tvTitle.text = data.name
             tvDesc.text = if (data.desc.isNullOrEmpty()) "No Description" else data.desc
+            tvReleaseDate.text = data.releaseDate
         }
     }
 
@@ -46,6 +47,7 @@ class DetailActivity : AppCompatActivity() {
             imgDetailHightlight.loadImageMovie("$BASE_URL_API_IMAGE$POSTER_SIZE_W185${data.imgPreview}")
             tvTitle.text = data.name
             tvDesc.text = data.desc
+            tvReleaseDate.text = data.releaseDate
         }
     }
 

@@ -15,5 +15,7 @@ data class TvShowResponse(
     @SerializedName("poster_path")
     var poster: String?,
     @SerializedName("backdrop_path")
-    var imgPreview: String?
+    var imgPreview: String?,
+    @SerializedName("release_date")
+    var releaseDate: String?
 ): Parcelable
