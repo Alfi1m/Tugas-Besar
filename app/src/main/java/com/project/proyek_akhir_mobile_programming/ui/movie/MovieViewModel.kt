@@ -26,7 +26,8 @@ class MovieViewModel: ViewModel() {
                 }
 
                 override fun onFailure(call: Call<ListResponse<MovieResponse>>, t: Throwable) {
-                    Log.d(this@MovieViewModel::class.java.simpleName, t.message.toString())
+                    Log.d(this@MovieViewModel::class.java.simpleName
+                        , t.message.toString())
                 }
 
             })
