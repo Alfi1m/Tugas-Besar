@@ -2,8 +2,8 @@ package com.project.proyek_akhir_mobile_programming.ui.detail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.project.proyek_akhir_mobile_programming.data.model.MovieResponse
-import com.project.proyek_akhir_mobile_programming.data.model.TvShowResponse
+import com.project.proyek_akhir_mobile_programming.core.domain.model.Movie
+import com.project.proyek_akhir_mobile_programming.core.domain.model.TvShow
 import com.project.proyek_akhir_mobile_programming.databinding.ActivityDetailBinding
 import com.project.proyek_akhir_mobile_programming.utils.*
 
@@ -23,15 +23,15 @@ class DetailActivity : AppCompatActivity() {
         val type = intent?.extras?.getString(EXTRA_TYPE)
 
         if (type == data[0]){
-            val data = intent?.extras?.getParcelable<MovieResponse>(EXTRA_DATA)
-            getDetailMovie(data as MovieResponse)
+            val data = intent?.extras?.getParcelable<Movie>(EXTRA_DATA)
+            getDetailMovie(data as Movie)
         }else{
-            val data = intent?.extras?.getParcelable<TvShowResponse>(EXTRA_DATA)
-            getDetailTvShow(data as TvShowResponse)
+            val data = intent?.extras?.getParcelable<TvShow>(EXTRA_DATA)
+            getDetailTvShow(data as TvShow)
         }
     }
 
-    private fun getDetailTvShow(data: TvShowResponse) {
+    private fun getDetailTvShow(data: TvShow) {
         binding.apply {
             imgDetailPoster.loadImageTvShow("$BASE_URL_API_IMAGE$POSTER_SIZE_W185${data.imgPreview}")
             imgDetailHightlight.loadImageTvShow("$BASE_URL_API_IMAGE$POSTER_SIZE_W780${data.poster}")
@@ -41,7 +41,7 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun getDetailMovie(data: MovieResponse) {
+    private fun getDetailMovie(data: Movie) {
         binding.apply {
             imgDetailPoster.loadImageMovie("$BASE_URL_API_IMAGE$POSTER_SIZE_W780${data.poster}")
             imgDetailHightlight.loadImageMovie("$BASE_URL_API_IMAGE$POSTER_SIZE_W185${data.imgPreview}")

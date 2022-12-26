@@ -6,11 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
-import com.project.proyek_akhir_mobile_programming.data.model.MovieResponse
+import com.project.proyek_akhir_mobile_programming.core.data.remote.Resource
+import com.project.proyek_akhir_mobile_programming.core.domain.model.Movie
 import com.project.proyek_akhir_mobile_programming.databinding.FragmentMovieBinding
 import com.project.proyek_akhir_mobile_programming.ui.detail.DetailActivity
 import com.project.proyek_akhir_mobile_programming.utils.showToast
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class MovieFragment : Fragment() {
 
@@ -19,7 +20,7 @@ class MovieFragment : Fragment() {
 
     private lateinit var adapter: MovieAdapter
 
-    private lateinit var viewModel: MovieViewModel
+    private val viewModel: MovieViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,8 +38,6 @@ class MovieFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // init
-        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[MovieViewModel::class.java]
         adapter = MovieAdapter().apply {
             onClick { data ->
                 Intent(activity, DetailActivity::class.java).also { intent ->
@@ -54,19 +53,23 @@ class MovieFragment : Fragment() {
 
     private fun getMovies() {
 
-        showLoading(true)
-        viewModel.setMovies()
         viewModel.getMovies().observe(viewLifecycleOwner){
-            if (it != null){
-                adapter.movies = it as MutableList<MovieResponse>
-                binding.apply {
-                    rvMovie.setHasFixedSize(true)
-                    rvMovie.adapter = adapter
-                    showLoading(false)
+            when(it){
+                is Resource.Loading -> showLoading(true)
+                is Resource.Success -> {
+                    if (it.data != null){
+                        adapter.movies = it.data as MutableList<Movie>
+                        binding.apply {
+                            rvMovie.setHasFixedSize(true)
+                            rvMovie.adapter = adapter
+                        }
+                        showLoading(false)
+                    }
                 }
-            }else{
-                showLoading(false)
-                activity?.showToast("Data Failed to load or Data is Empty")
+                is Resource.Error -> {
+                    showLoading(false)
+                    activity?.showToast(it.message.toString())
+                }
             }
         }
 

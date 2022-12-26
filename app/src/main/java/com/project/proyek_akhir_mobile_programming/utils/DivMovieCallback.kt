@@ -1,9 +1,9 @@
 package com.project.proyek_akhir_mobile_programming.utils
 
 import androidx.recyclerview.widget.DiffUtil
-import com.project.proyek_akhir_mobile_programming.data.model.MovieResponse
+import com.project.proyek_akhir_mobile_programming.core.domain.model.Movie
 
-class DivMovieCallback(private val oldItem: List<MovieResponse>, private val newItem: List<MovieResponse>): DiffUtil.Callback() {
+class DivMovieCallback(private val oldItem: List<Movie>, private val newItem: List<Movie>): DiffUtil.Callback() {
     override fun getOldListSize(): Int = oldItem.size
 
     override fun getNewListSize(): Int = newItem.size

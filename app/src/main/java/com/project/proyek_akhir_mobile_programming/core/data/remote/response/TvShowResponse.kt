@@ -1,10 +1,7 @@
-package com.project.proyek_akhir_mobile_programming.data.model
+package com.project.proyek_akhir_mobile_programming.core.data.remote.response
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
 
-@Parcelize
 data class TvShowResponse(
     @SerializedName("id")
     var id: Int,
@@ -18,4 +15,4 @@ data class TvShowResponse(
     var imgPreview: String?,
     @SerializedName("release_date")
     var releaseDate: String?
-): Parcelable
+)

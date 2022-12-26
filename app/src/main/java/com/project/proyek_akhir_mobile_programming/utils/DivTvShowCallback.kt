@@ -1,9 +1,9 @@
 package com.project.proyek_akhir_mobile_programming.utils
 
 import androidx.recyclerview.widget.DiffUtil
-import com.project.proyek_akhir_mobile_programming.data.model.TvShowResponse
+import com.project.proyek_akhir_mobile_programming.core.domain.model.TvShow
 
-class DivTvShowCallback(private val oldItem: List<TvShowResponse>, private val newItem: List<TvShowResponse>): DiffUtil.Callback() {
+class DivTvShowCallback(private val oldItem: List<TvShow>, private val newItem: List<TvShow>): DiffUtil.Callback() {
     override fun getOldListSize(): Int = oldItem.size
 
     override fun getNewListSize(): Int = newItem.size

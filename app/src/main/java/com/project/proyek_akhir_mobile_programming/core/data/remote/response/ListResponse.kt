@@ -1,4 +1,4 @@
-package com.project.proyek_akhir_mobile_programming.data.model
+package com.project.proyek_akhir_mobile_programming.core.data.remote.response
 
 import com.google.gson.annotations.SerializedName
 

@@ -6,17 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
-import com.project.proyek_akhir_mobile_programming.R
-import com.project.proyek_akhir_mobile_programming.data.client.ApiClient
-import com.project.proyek_akhir_mobile_programming.data.model.ListResponse
-import com.project.proyek_akhir_mobile_programming.data.model.TvShowResponse
 import com.project.proyek_akhir_mobile_programming.databinding.FragmentTvShowBinding
 import com.project.proyek_akhir_mobile_programming.ui.detail.DetailActivity
-import com.project.proyek_akhir_mobile_programming.utils.showToast
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class TvShowFragment : Fragment() {
 
@@ -54,34 +45,7 @@ class TvShowFragment : Fragment() {
     }
 
     private fun getTvShow() {
-        showLoading(true)
-
-        ApiClient.instance.getTvShow()
-            .enqueue(object : Callback<ListResponse<TvShowResponse>>{
-                override fun onResponse(
-                    call: Call<ListResponse<TvShowResponse>>,
-                    response: Response<ListResponse<TvShowResponse>>
-                ) {
-                    if(response.isSuccessful){
-                        binding.apply {
-                            adapter.tvshow = response.body()?.results as MutableList<TvShowResponse>
-                            rvTvshow.adapter = adapter
-                            rvTvshow.setHasFixedSize(true)
-
-                            showLoading(false)
-                        }
-                    }else{
-                        activity?.showToast(response.message().toString())
-                        showLoading(false)
-                    }
-                }
-
-                override fun onFailure(call: Call<ListResponse<TvShowResponse>>, t: Throwable) {
-                    activity?.showToast(t.message.toString())
-                    showLoading(false)
-                }
-
-            })
+        // TODO
     }
 
     private fun showLoading(state: Boolean){

@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.project.proyek_akhir_mobile_programming.data.model.MovieResponse
+import com.project.proyek_akhir_mobile_programming.core.domain.model.Movie
 import com.project.proyek_akhir_mobile_programming.databinding.ItemMovieOrTvshowBinding
 import com.project.proyek_akhir_mobile_programming.utils.BASE_URL_API_IMAGE
 import com.project.proyek_akhir_mobile_programming.utils.DivMovieCallback
@@ -13,9 +13,9 @@ import com.project.proyek_akhir_mobile_programming.utils.loadImageMovie
 
 class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
-    private var listener: ((MovieResponse) -> Unit)? = null
+    private var listener: ((Movie) -> Unit)? = null
 
-    var movies = mutableListOf<MovieResponse>()
+    var movies = mutableListOf<Movie>()
         set(value) {
             val callback = DivMovieCallback(field, value)
             val result = DiffUtil.calculateDiff(callback)
@@ -26,7 +26,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: ItemMovieOrTvshowBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: MovieResponse) {
+        fun bind(movie: Movie) {
             binding.apply {
                 movie.poster?.let {
                     poster.loadImageMovie("$BASE_URL_API_IMAGE$POSTER_SIZE_W185$it")
@@ -50,7 +50,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int = movies.size
 
-    fun onClick(listener: ((MovieResponse) -> Unit)?){
+    fun onClick(listener: ((Movie) -> Unit)?){
         this.listener = listener
     }
 }

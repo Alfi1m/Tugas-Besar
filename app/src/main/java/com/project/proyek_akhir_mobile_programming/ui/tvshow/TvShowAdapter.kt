@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.project.proyek_akhir_mobile_programming.data.model.TvShowResponse
+import com.project.proyek_akhir_mobile_programming.core.domain.model.TvShow
 import com.project.proyek_akhir_mobile_programming.databinding.ItemMovieOrTvshowBinding
 import com.project.proyek_akhir_mobile_programming.utils.BASE_URL_API_IMAGE
 import com.project.proyek_akhir_mobile_programming.utils.DivTvShowCallback
@@ -13,9 +13,9 @@ import com.project.proyek_akhir_mobile_programming.utils.loadImageTvShow
 
 class TvShowAdapter: RecyclerView.Adapter<TvShowAdapter.ViewHolder>() {
 
-    private var listener: ((TvShowResponse) -> Unit)? = null
+    private var listener: ((TvShow) -> Unit)? = null
 
-    var tvshow = mutableListOf<TvShowResponse>()
+    var tvshow = mutableListOf<TvShow>()
     set(value) {
         val callback = DivTvShowCallback(field, value)
         val result = DiffUtil.calculateDiff(callback)
@@ -25,7 +25,7 @@ class TvShowAdapter: RecyclerView.Adapter<TvShowAdapter.ViewHolder>() {
     }
 
     inner class ViewHolder(private val binding: ItemMovieOrTvshowBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(tvShow: TvShowResponse){
+        fun bind(tvShow: TvShow){
             binding.apply {
                 tvShow.poster?.let {
                     poster.loadImageTvShow("$BASE_URL_API_IMAGE$POSTER_SIZE_W185$it")
@@ -49,7 +49,7 @@ class TvShowAdapter: RecyclerView.Adapter<TvShowAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int = tvshow.size
 
-    fun onClick(listener: ((TvShowResponse) -> Unit)?){
+    fun onClick(listener: ((TvShow) -> Unit)?){
         this.listener = listener
     }
 }
