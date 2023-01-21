@@ -15,14 +15,14 @@ class TvShowAdapter: RecyclerView.Adapter<TvShowAdapter.ViewHolder>() {
 
     private var listener: ((TvShow) -> Unit)? = null
 
-    var tvshow = mutableListOf<TvShow>()
-    set(value) {
-        val callback = DivTvShowCallback(field, value)
-        val result = DiffUtil.calculateDiff(callback)
-        field.clear()
-        field.addAll(value)
-        result.dispatchUpdatesTo(this)
-    }
+    var tvShow = mutableListOf<TvShow>()
+        set(value) {
+            val callback = DivTvShowCallback(field, value)
+            val result = DiffUtil.calculateDiff(callback)
+            field.clear()
+            field.addAll(value)
+            result.dispatchUpdatesTo(this)
+        }
 
     inner class ViewHolder(private val binding: ItemMovieOrTvshowBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(tvShow: TvShow){
@@ -44,10 +44,10 @@ class TvShowAdapter: RecyclerView.Adapter<TvShowAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(tvshow[position])
+        holder.bind(tvShow[position])
     }
 
-    override fun getItemCount(): Int = tvshow.size
+    override fun getItemCount(): Int = tvShow.size
 
     fun onClick(listener: ((TvShow) -> Unit)?){
         this.listener = listener

@@ -7,7 +7,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.project.proyek_akhir_mobile_programming.R
 
-const val API_KEY = "3f439738eb048143ce0cdfba822268a6"
+const val API_KEY = "e233fa429757eb2e60525c135a5c8d28"
 const val BASE_URL = "https://api.themoviedb.org/3/"
 
 const val BASE_URL_API_IMAGE = "https://image.tmdb.org/t/p/"

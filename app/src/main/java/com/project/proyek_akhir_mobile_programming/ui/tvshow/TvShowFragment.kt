@@ -6,8 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.project.proyek_akhir_mobile_programming.core.data.remote.Resource
+import com.project.proyek_akhir_mobile_programming.core.domain.model.Movie
+import com.project.proyek_akhir_mobile_programming.core.domain.model.TvShow
 import com.project.proyek_akhir_mobile_programming.databinding.FragmentTvShowBinding
 import com.project.proyek_akhir_mobile_programming.ui.detail.DetailActivity
+import com.project.proyek_akhir_mobile_programming.ui.movie.MovieViewModel
+import com.project.proyek_akhir_mobile_programming.utils.showToast
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class TvShowFragment : Fragment() {
 
@@ -15,6 +21,8 @@ class TvShowFragment : Fragment() {
     private lateinit var binding: FragmentTvShowBinding
 
     private lateinit var adapter: TvShowAdapter
+
+    private val viewModel: TvShowViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,7 +53,25 @@ class TvShowFragment : Fragment() {
     }
 
     private fun getTvShow() {
-        // TODO
+        viewModel.getTvShow().observe(viewLifecycleOwner){
+            when(it){
+                is Resource.Loading -> showLoading(true)
+                is Resource.Success -> {
+                    if (it.data != null){
+                        adapter.tvShow = it.data as MutableList<TvShow>
+                        binding.apply {
+                            rvTvshow.setHasFixedSize(true)
+                            rvTvshow.adapter = adapter
+                        }
+                        showLoading(false)
+                    }
+                }
+                is Resource.Error -> {
+                    showLoading(false)
+                    activity?.showToast(it.message.toString())
+                }
+            }
+        }
     }
 
     private fun showLoading(state: Boolean){
